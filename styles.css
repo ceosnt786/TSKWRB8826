@@ -16,3 +16,7 @@
 
 /* Typed learner answers */
 .online-answer-box{margin-top:.8rem;border:1px solid #b8cbbb;background:#f6fbf7;border-radius:14px;padding:.9rem}.online-answer-list{display:grid;gap:.8rem;margin-top:.85rem}.online-answer-item{background:#fff;border:1px solid var(--line);border-radius:12px;padding:.75rem}.online-answer-question{font-size:.92rem;margin-bottom:.5rem;line-height:1.45}.online-answer-item textarea,.online-answer-box> .field textarea{width:100%;min-height:90px;border:1px solid #bfcac4;border-radius:10px;padding:.7rem;resize:vertical;background:#fff;color:var(--ink)}.upload-or{display:flex;align-items:center;gap:.7rem;color:var(--muted);font-size:.78rem;font-weight:800;margin:.9rem 0}.upload-or:before,.upload-or:after{content:"";height:1px;background:var(--line);flex:1}.typed-review{display:grid;gap:.6rem}.typed-review-item{border:1px solid var(--line);border-radius:11px;padding:.7rem;background:#f9fbfa}.typed-review-item strong{display:block;color:var(--green);margin-bottom:.3rem}
+
+/* Clickable links inside workbook instructions/questions */
+.content-link{color:#0b6b45;text-decoration:underline;text-underline-offset:2px;font-weight:650;overflow-wrap:anywhere;word-break:break-word}
+.content-link:hover{text-decoration-thickness:2px}
