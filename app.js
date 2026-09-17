@@ -186,7 +186,7 @@ function studentModal(s,workbooks,currentAssignments){
   };
   ['allocGrade','allocSubject','allocTerm'].forEach(id=>$(`#${id}`).onchange=refreshChoices);
   $('#addWorkbookChoice').onclick=()=>{const id=$('#allocWorkbook').value;if(!id)return toast('Choose a workbook first.',true);selected.add(id);renderAssigned();refreshChoices();};
-  $('[name="grade"]','#studentForm').onchange=e=>{if(!s){$('#allocGrade').value=e.target.value;refreshChoices();}};
+  $('#studentForm [name="grade"]').onchange=e=>{if(!s){$('#allocGrade').value=e.target.value;refreshChoices();}};
   renderAssigned();refreshChoices();
   $('#studentForm').onsubmit=async e=>{e.preventDefault();const btn=e.submitter;setBusy(btn,true);const f=new FormData(e.currentTarget);const row={name:f.get('name').trim(),grade:Number(f.get('grade')),student_code:f.get('student_code').trim()||null,active:f.get('active')==='true'};let id=s?.id;if(!s)row.access_token=token();try{if(s){const r=await sb.from('students').update(row).eq('id',s.id);if(r.error)throw r.error;}else{const r=await sb.from('students').insert(row).select().single();if(r.error)throw r.error;id=r.data.id;}const existing=currentAssignments||[];const remove=existing.filter(a=>!selected.has(a.workbook_id)).map(a=>a.id);if(remove.length){const r=await sb.from('workbook_assignments').delete().in('id',remove);if(r.error)throw r.error;}const existingMasterIds=new Set(existing.map(a=>a.workbook_id));const add=[...selected].filter(wid=>!existingMasterIds.has(wid));if(add.length){const r=await sb.from('workbook_assignments').insert(add.map(workbook_id=>({student_id:id,workbook_id,assigned_by:currentTeacher.user_id})));if(r.error)throw r.error;}closeModal();toast('Student saved.');pageStudents();}catch(err){setBusy(btn,false);toast(err.message||String(err),true);}};
 }
@@ -427,3 +427,4 @@ async function teacherLinkLogin(){
 }
 async function boot(){ if(!configured)return setupScreen(); if(studentToken)return startStudent(); if(teacherLinkToken)return teacherLinkLogin(); return startTeacher(); }
 boot();
+
